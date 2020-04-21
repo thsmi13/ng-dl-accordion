@@ -1,0 +1,24 @@
+<div class="row py-2" [ngClass]="{'accordion__isOpen': isOpen()}">
+  <div class="col-12">
+    <div class="d-flex align-items-center">
+      <div class="p-2">
+        <h1 class="m-0 pr-5">Q{{question.id}}</h1>
+      </div>
+      <div class="p-2 flex-fill">
+        <p class="mt-3"> {{ question.question }}</p>
+      </div>
+      <div class="p-2">
+        <div class="accordion__toggle float-right" (click)="toggle()">
+          <img src="assets/plus-icon.svg">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="row accordion__answer">
+  <div class="col-12" [@openClose]="isOpen() ? 'open' : 'closed'">
+    <ng-content></ng-content>
+  </div>
+
+</div>

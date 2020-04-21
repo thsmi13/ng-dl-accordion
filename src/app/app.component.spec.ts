@@ -1,31 +1,25 @@
-import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { Questions } from './model/questions.model';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  let comp: AppComponent;
+  let expectedQuestions: Questions[];
+  let mockQuestionService: any;
+  let getQuestionsSpy: any;
+
+  beforeEach((done: DoneFn) => {
+    expectedQuestions = [{ id: 1, question: 'A', answer: 'B' }, { id: 2, question: 'C', answer: 'D' }];
+    mockQuestionService = jasmine.createSpyObj('QuestionsService', ['getQuestions']);
+    getQuestionsSpy = mockQuestionService.getQuestions.and.returnValue(of(expectedQuestions));
+    comp = new AppComponent(mockQuestionService);
+    comp.ngOnInit();
+    mockQuestionService.getQuestions.calls.first().returnValue.subscribe(done);
   });
 
-  it(`should have as title 'ng-dl-accordion'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ng-dl-accordion');
+  it('should expose the questions retrieved from the QuestionService', () => {
+    expect(comp.questions).toBe(expectedQuestions);
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('ng-dl-accordion app is running!');
-  });
 });

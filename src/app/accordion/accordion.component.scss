@@ -1,0 +1,28 @@
+.accordion__isOpen {
+  background-color: #a9a9a9;
+
+  .accordion__toggle {
+    img {
+      transition: all 0.25s ease;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.accordion__toggle {
+
+  max-width: 60px;
+  max-height: 60px;
+  background-color: #ffd300;
+  padding: 10px;
+  img {
+    transition: all 0.25s ease;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.accordion__answer {
+  border-bottom: 2px solid black;
+  overflow: hidden;
+}
